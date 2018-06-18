@@ -1,4 +1,5 @@
 import sys
+import time
 from operator import itemgetter
 from igraph import *
 
@@ -177,11 +178,22 @@ def diameter_calculation(g):
     lower_bound = max(eccentricity_list, key=itemgetter(1))[1]
     upper_bound = 2 * min(eccentricity_list, key=itemgetter(1))[1]
 
+    # Getting diameter
+    diam_approximation = int((lower_bound + upper_bound) / 2)
+
+    # Getting radius
+    radius_approximation = min(eccentricity_list, key=itemgetter(1))[1]
+
+    # Getting center vertex
+    center_vertex = min(eccentricity_list, key=itemgetter(1))[0]
+
     # Pretty print
     print(bcolors.GREEN + "\nResults" + bcolors.ENDC)
-    print("\t{} <= diameter(G) <= {}".format(lower_bound, upper_bound))
-
-    return eccentricity_list
+    print("\tAn enclosure of the diameter: " + bcolors.BLUE + "{}".format(lower_bound), end='')
+    print(bcolors.ENDC + " <= diameter(G) <= " + bcolors.BLUE + "{}".format(upper_bound) + bcolors.ENDC)
+    print("\tAn approximation of the diameter: " + bcolors.BLUE + "{}".format(diam_approximation) + bcolors.ENDC)
+    print("\tAn approximation of the radius: " + bcolors.BLUE + "{}".format(radius_approximation) + bcolors.ENDC)
+    print("\tVertex from the center is: " + bcolors.BLUE + "{}".format(center_vertex) + bcolors.ENDC)
 
 
 def main():
@@ -202,8 +214,10 @@ def main():
 
     # Calculate diameter
     print(bcolors.GREEN + "\nCalculate diameter" + bcolors.ENDC)
-    diam = diameter_calculation(g)
-    print(diam)
+    start = time.time()
+    diameter_calculation(g)
+    end = time.time() - start
+    print("\tTime to calculates diam has taken: " + bcolors.BLUE + "{}".format(round(end, 3)) + bcolors.ENDC + " secondes")
 
 
 if __name__ == "__main__":
