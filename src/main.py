@@ -6,9 +6,11 @@ from igraph import *
 
 # Colors class for pretty print
 class bcolors:
-    BLUE = '\033[94m'
+    BLUE  = '\033[94m'
     GREEN = '\033[92m'
-    ENDC = '\033[0m'
+    RED   = '\033[91m'
+    GOLD  = '\033[93m'    
+    ENDC  = '\033[0m'
 
 
 # Function that add a vertex on a dict
@@ -189,6 +191,7 @@ def diameter_calculation(g):
 
     # Pretty print
     print(bcolors.GREEN + "\nResults" + bcolors.ENDC)
+    print("\tNumber of bfs done: " + bcolors.BLUE + "{}".format(len(eccentricity_list)) + bcolors.ENDC)
     print("\tAn enclosure of the diameter: " + bcolors.BLUE + "{}".format(lower_bound), end='')
     print(bcolors.ENDC + " <= diameter(G) <= " + bcolors.BLUE + "{}".format(upper_bound) + bcolors.ENDC)
     print("\tAn approximation of the diameter: " + bcolors.BLUE + "{}".format(diam_approximation) + bcolors.ENDC)
@@ -198,14 +201,20 @@ def diameter_calculation(g):
 
 def main():
     print("\n========================")
-    print("  Giant Graph Calculus")
+    print("  Giant" + bcolors.GOLD + " Graph " + bcolors.ENDC + "Calculus")
     print("========================")
 
-    g = Graph()
-    path = sys.argv[1]
+    # Parsing option
+    if len(sys.argv) != 2:
+        print(bcolors.RED + "\nError: too many or too few argument." + bcolors.ENDC)
+        print("\nPlease enter for example:")
+        print("> python main/src ressource/amazon_graph.txt\n")
+        quit(1)
 
-    # Reading file
+    # Reading file and creating graph
     print(bcolors.GREEN + "\nReading file and filling graph" + bcolors.ENDC)
+    g = Graph()    
+    path = sys.argv[1]    
     g = graph_from_file(path)
     
     # Isolation of the largest component
@@ -217,7 +226,7 @@ def main():
     start = time.time()
     diameter_calculation(g)
     end = time.time() - start
-    print("\tTime to calculates diam has taken: " + bcolors.BLUE + "{}".format(round(end, 3)) + bcolors.ENDC + " secondes")
+    print("\tTime to calculates diam has taken: " + bcolors.BLUE + "{}".format(round(end, 3)) + bcolors.ENDC + " secondes\n")
 
 
 if __name__ == "__main__":
