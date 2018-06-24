@@ -12,7 +12,6 @@ class bcolors:
     GOLD  = '\033[93m'    
     ENDC  = '\033[0m'
 
-
 # Function that add a vertex on a dict
 def add_vertex_dico(vertex_dict, u, index_dict):
     try:
@@ -191,6 +190,8 @@ def diameter_calculation(g):
 
     # Pretty print
     print(bcolors.GREEN + "\nResults" + bcolors.ENDC)
+    print("\tNumber of vertices: " + bcolors.BLUE + "{}".format(g.vcount()) + bcolors.ENDC)
+    print("\tNumber of edges: " + bcolors.BLUE + "{}".format(g.ecount()) + bcolors.ENDC)
     print("\tNumber of bfs done: " + bcolors.BLUE + "{}".format(len(eccentricity_list)) + bcolors.ENDC)
     print("\tAn enclosure of the diameter: " + bcolors.BLUE + "{}".format(lower_bound), end='')
     print(bcolors.ENDC + " <= diameter(G) <= " + bcolors.BLUE + "{}".format(upper_bound) + bcolors.ENDC)
@@ -200,9 +201,9 @@ def diameter_calculation(g):
 
 
 def main():
-    print("\n========================")
-    print("  Giant" + bcolors.GOLD + " Graph " + bcolors.ENDC + "Calculus")
-    print("========================")
+    print("\n=========================")
+    print("  Giant" + bcolors.GOLD + " Graphs " + bcolors.ENDC + "Calculus")
+    print("=========================")
 
     # Parsing option
     if len(sys.argv) != 2:
